@@ -10,8 +10,11 @@
 
 <!-- ADDED FROM LECTURE -->
 <span>
-    <input @bind="SelectedCell" readonly />
-    <input value="@CurrentContents" @ref="TextArea" @onchange="CellContentChanged" />
+    <label for="selectedCell">Cell:</label>
+    <input @bind="SelectedCell" id="selectedCell" name="selectedCell" readonly />
+    <label for="selectedContent">Content:</label>
+    <input id="selectedContent" name="selectedContent" value="@CurrentContents" @ref="TextArea" @onchange="CellContentChanged" />
+    <label for="selectedValue">Value:</label>
 </span>
 
 <div>
