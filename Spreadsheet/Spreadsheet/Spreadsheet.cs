@@ -156,6 +156,8 @@ public class Spreadsheet
         /// </summary>
         public object Contents { get; private set; }
 
+        public object Value { get; private set; }
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="Cell"/> class.
         /// </summary>
@@ -168,9 +170,10 @@ public class Spreadsheet
         ///     The contents of the cell can be a formula, a string, or a numeric value.
         ///     The <see cref="Contents"/> property is set based on this parameter.
         /// </remarks>
-        public Cell(object contents)
+        public Cell(object contents, object value)
         {
             Contents = contents;
+            Value = value;
         }
     }
 
@@ -261,14 +264,14 @@ public class Spreadsheet
             RemoveExistingDependencies(name);
 
             // Update the cell's contents in the dictionary
-            Cells[name] = new Cell(number);
+            Cells[name] = new Cell(number, number);
         }
 
         // If the cell does not exist in the dictionary
         else
         {
             // Add the cell name and contents to the dictionary
-            Cells.Add(name, new Cell(number));
+            Cells.Add(name, new Cell(number, number));
         }
 
         // Get the list of cells that need to be recalculated
@@ -304,7 +307,7 @@ public class Spreadsheet
             if (text != "")
             {
                 // Update the cell's contents in the dictionary
-                Cells[name] = new Cell(text);
+                Cells[name] = new Cell(text, text);
             }
 
             // If text is an empty string
@@ -322,7 +325,7 @@ public class Spreadsheet
             if (text != "")
             {
                 // Add the cell name and contents to the dictionary
-                Cells.Add(name, new Cell(text));
+                Cells.Add(name, new Cell(text, text));
             }
         }
 
@@ -399,14 +402,14 @@ public class Spreadsheet
         if (Cells.ContainsKey(name))
         {
             // Update the cell's contents in the dictionary
-            Cells[name] = new Cell(formula);
+            Cells[name] = new Cell(formula, GetCellValue(name));
         }
 
         // If the cell does not exist in the dictionary
         else
         {
             // Add the cell name and contents to the dictionary
-            Cells.Add(name, new Cell(formula));
+            Cells.Add(name, new Cell(formula, GetCellValue(name)));
         }
 
         // Return the list of cells that need to be recalculated
