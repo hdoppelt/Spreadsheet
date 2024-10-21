@@ -22,7 +22,7 @@ using System.Text.Json.Serialization;
 /// <summary>
 ///     <para>
 ///         Thrown to indicate that a read or write attempt has failed with
-///         an expected error message informing the user of what went wrong.
+///         an expected error message informing the user of what went wrong..
 ///     </para>
 /// </summary>
 public class SpreadsheetReadWriteException : Exception

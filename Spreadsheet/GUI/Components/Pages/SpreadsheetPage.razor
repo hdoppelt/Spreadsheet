@@ -14,12 +14,6 @@
     <input value="@CurrentContents" @ref="TextArea" @onchange="CellContentChanged" />
 </span>
 
-
-<span>
-    <button class="btn btn-primary" @onclick="SaveFile">Save</button>
-    <label>Load</label><InputFile type="file" OnChange="HandleFileChooser" />
-</span>
-
 <div>
     <div class="table-container">
         <div class="scrollable">
@@ -55,6 +49,11 @@
         </div>
     </div>
 </div>
+
+<span>
+    <button class="btn btn-primary" @onclick="SaveFile">Save</button>
+    <label>Load</label><InputFile type="file" OnChange="HandleFileChooser" />
+</span>
 
 <style>
     .spreadcell {

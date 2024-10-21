@@ -49,7 +49,7 @@ public partial class SpreadsheetPage
     // Member variables used to keep track of internal state, which as
     // which row/col is selected, and to control UI elements
     // See lecture for details
-    private string SelectedCell = string.Empty;
+    private string SelectedCell = "A1";
     private string CurrentContents = string.Empty;
     private ElementReference TextArea;
     private int SelectedRow = 0;
@@ -64,7 +64,7 @@ public partial class SpreadsheetPage
     /// <param name="col">The column component of the cell's coordinates</param>
     private void CellClicked( int row, int col )
     {
-        SelectedCell = $"{row}, {col}";
+        SelectedCell = $"{Alphabet[col]}{row + 1}";
         SelectedRow = row;
         SelectedCol = col;
         CurrentContents = CellsBackingStore[row, col];
