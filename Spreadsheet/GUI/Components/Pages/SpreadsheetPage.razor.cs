@@ -44,6 +44,19 @@ public partial class SpreadsheetPage
     private string[,] CellsBackingStore { get; set; } = new string[ROWS, COLS];
 
 
+
+    //ADDED FROM LECTURE
+    // Member variables used to keep track of internal state, which as
+    // which row/col is selected, and to control UI elements
+    // See lecture for details
+    private string SelectedCell = string.Empty;
+    private string CurrentContents = string.Empty;
+    private ElementReference TextArea;
+    private int SelectedRow = 0;
+    private int SelectedCol = 0;
+
+
+    //ADDED FROM LECTURE
     /// <summary>
     /// Handler for when a cell is clicked
     /// </summary>
@@ -51,8 +64,32 @@ public partial class SpreadsheetPage
     /// <param name="col">The column component of the cell's coordinates</param>
     private void CellClicked( int row, int col )
     {
-
+        SelectedCell = $"{row}, {col}";
+        SelectedRow = row;
+        SelectedCol = col;
+        CurrentContents = CellsBackingStore[row, col];
+        TextArea.FocusAsync();
     }
+
+
+    //ADDED FROM LECTURE
+    private void CellContentChanged(ChangeEventArgs e)
+    {
+        // This uses the null forgiving (!) and coalescing (??)
+        // operators to get either the value that was typed in,
+        // or the empty string if it was null
+        string data = e.Value!.ToString() ?? "";
+        // This is an example of how to put something into a cell,
+        // and how to clear/update the input element.
+        // This is *not* exactly what you'll want to put into the
+        // cell in a real spreadsheet.
+        CellsBackingStore[SelectedRow, SelectedCol] = data;
+        CurrentContents = data;
+        TextArea.FocusAsync();
+    }
+
+
+
 
 
     /// <summary>
