@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Diagnostics;
+using CS3500.Spreadsheet;
 
 /// <summary>
 /// TODO: Fill in
@@ -54,7 +55,9 @@ public partial class SpreadsheetPage
     private ElementReference TextArea;
     private int SelectedRow = 0;
     private int SelectedCol = 0;
-
+    //Temporary
+    private Spreadsheet ss = new();
+    private object SelectedValue = "";
 
     //ADDED FROM LECTURE
     /// <summary>
@@ -68,6 +71,7 @@ public partial class SpreadsheetPage
         SelectedRow = row;
         SelectedCol = col;
         CurrentContents = CellsBackingStore[row, col];
+        SelectedValue = ss.GetCellValue(SelectedCell);
         TextArea.FocusAsync();
     }
 
@@ -83,8 +87,10 @@ public partial class SpreadsheetPage
         // and how to clear/update the input element.
         // This is *not* exactly what you'll want to put into the
         // cell in a real spreadsheet.
+        ss.SetContentsOfCell(SelectedCell, data);
         CellsBackingStore[SelectedRow, SelectedCol] = data;
         CurrentContents = data;
+        SelectedValue = ss.GetCellValue(SelectedCell);
         TextArea.FocusAsync();
     }
 
