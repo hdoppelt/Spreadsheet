@@ -44,7 +44,7 @@
                                 int c = col;
 
                                 <td @onclick="() => CellClicked(r,c)" style="padding:0px !important;">
-                                    <p class="spreadcell"> @CellsBackingStore[r, c]  </p>
+                                    <p class="spreadcell"> @ss.GetCellValue($"{Alphabet[c]}{r + 1}") </p>
                                 </td>
                             }
                         </tr>

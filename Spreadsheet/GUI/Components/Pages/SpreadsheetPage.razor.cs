@@ -76,22 +76,30 @@ public partial class SpreadsheetPage
     }
 
 
-    //ADDED FROM LECTURE
-    private void CellContentChanged(ChangeEventArgs e)
+    private async Task CellContentChanged(ChangeEventArgs e)
     {
-        // This uses the null forgiving (!) and coalescing (??)
-        // operators to get either the value that was typed in,
-        // or the empty string if it was null
         string data = e.Value!.ToString() ?? "";
-        // This is an example of how to put something into a cell,
-        // and how to clear/update the input element.
-        // This is *not* exactly what you'll want to put into the
-        // cell in a real spreadsheet.
-        ss.SetContentsOfCell(SelectedCell, data);
-        CellsBackingStore[SelectedRow, SelectedCol] = data;
-        CurrentContents = data;
-        SelectedValue = ss.GetCellValue(SelectedCell);
-        TextArea.FocusAsync();
+
+        try
+        {
+            // Attempt to set the content in the spreadsheet
+            ss.SetContentsOfCell(SelectedCell, data);
+
+            // Recalculate the value of the selected cell
+            SelectedValue = ss.GetCellValue(SelectedCell);
+
+            // Update the current contents and backing store
+            CellsBackingStore[SelectedRow, SelectedCol] = data;
+            CurrentContents = data;
+
+            // Refocus the text area
+            await TextArea.FocusAsync();
+        }
+        catch (Exception ex)
+        {
+            // Handle formula or other evaluation errors
+            await JSRuntime.InvokeVoidAsync("alert", $"Error in cell {SelectedCell}: {ex.Message}");
+        }
     }
 
 
