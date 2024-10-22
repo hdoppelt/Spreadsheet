@@ -1,4 +1,7 @@
-﻿@namespace GUI.Client.Pages
+﻿<!-- Name: Harrison Doppelt & Victor Valdez Landa -->
+<!-- Date: 10/22/2024 -->
+
+@namespace GUI.Client.Pages
 @page "/sheets"
 @using System.Diagnostics
 @using Microsoft.JSInterop
@@ -8,17 +11,17 @@
 
 <PageTitle>Spreadsheet</PageTitle>
 
-<!-- ADDED FROM LECTURE -->
+<!-- Cell, Content, and Value -->
 <span>
     <label for="selectedCell">Cell:</label>
     <input @bind="SelectedCell" id="selectedCell" name="selectedCell" readonly />
-    <label for="selectedContent">Content:</label>
-    <input id="selectedContent" name="selectedContent" value="@CurrentContents" @ref="TextArea" @onchange="CellContentChanged" />
+    <label for="selectedContents">Content:</label>
+    <input id="selectedContents" name="selectedContents" value="@SelectedContents" @ref="TextArea" @onchange="CellContentChanged" />
     <label for="selectedValue">Value:</label>
-    <!-- ADD VALUE INPUT -->
-    <input id="selectedValue" name="selectedCell" value="@SelectedValue" readonly />
+    <input id="selectedValue" name="selectedValue" value="@SelectedValue" readonly />
 </span>
 
+<!-- Spreadsheet -->
 <div>
     <div class="table-container">
         <div class="scrollable">
@@ -32,7 +35,6 @@
                         }
                     </tr>
                 </thead>
-
                 <tbody>
                     @for ( int row = 0; row < ROWS; row++ )
                     {
@@ -44,7 +46,7 @@
                                 int c = col;
 
                                 <td @onclick="() => CellClicked(r,c)" style="padding:0px !important;">
-                                    <p class="spreadcell"> @ss.GetCellValue($"{Alphabet[c]}{r + 1}") </p>
+                                    <p class="spreadcell"> @sheet.GetCellValue($"{Alphabet[c]}{r + 1}") </p>
                                 </td>
                             }
                         </tr>
@@ -55,11 +57,13 @@
     </div>
 </div>
 
+<!-- Save and Load -->
 <span>
     <button class="btn btn-primary" @onclick="SaveFile">Save</button>
     <label>Load</label><InputFile type="file" OnChange="HandleFileChooser" />
 </span>
 
+<!-- Style -->
 <style>
     .spreadcell {
         width: 150px;
@@ -92,8 +96,9 @@
     }
 </style>
 
-
+<!-- JavaScript -->
 <script type="text/javascript">
+
     function focusElement(id) {
         console.log(`looking for: ${id}`);
         var element = document.getElementById(id);
