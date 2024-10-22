@@ -53,7 +53,6 @@ public partial class SpreadsheetPage
     /// <summary>
     ///     Default empty cell content.
     /// </summary>
-    private string CurrentContents = string.Empty;
     private string SelectedContents = string.Empty;
 
     /// <summary>
