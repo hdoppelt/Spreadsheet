@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Diagnostics;
 using CS3500.Spreadsheet;
+using System.Net.Http.Json;
 
 /// <summary>
 ///     TODO: Fill in
@@ -130,7 +131,8 @@ public partial class SpreadsheetPage
     /// </summary>
     private async void SaveFile()
     {
-        await JSRuntime.InvokeVoidAsync("downloadFile", FileSaveName, "replace this with the json representation of the current spreadsheet");
+        string jsonSpreadsheet = sheet.GetSpreadsheetAsJson();
+        await JSRuntime.InvokeVoidAsync("downloadFile", FileSaveName, jsonSpreadsheet);
     }
 
     /// <summary>

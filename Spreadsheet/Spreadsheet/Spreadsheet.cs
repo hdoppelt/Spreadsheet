@@ -946,53 +946,60 @@ public class Spreadsheet
     /// </exception>
     public void Save(string filename)
     {
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        };
-
         try
         {
-            // Create a dictionary to store the cell data in the correct format
-            var cellsDictionary = new Dictionary<string, Dictionary<string, string>>();
-
-            // Iterate over all non-empty cells in the spreadsheet
-            foreach (var cellName in GetNamesOfAllNonemptyCells())
-            {
-                // Get the cell contents
-                var cellContents = GetCellContents(cellName);
-
-                // Generate the string form of the content
-                string stringForm = GenerateStringForm(cellContents);
-
-                // Add the cell to the dictionary
-                cellsDictionary[cellName] = new Dictionary<string, string>
-                {
-                    {"StringForm", stringForm}
-                };
-            }
-
-            // Create the final dictionary with "Cells" as the root key
-            var jsonObject = new Dictionary<string, object>
-            {
-                {"Cells", cellsDictionary}
-            };
-
-            // Serialize the dictionary to JSON
-            string json = JsonSerializer.Serialize(jsonObject, options);
+            // Get the JSON representation of the spreadsheet
+            string json = GetSpreadsheetAsJson();
 
             // Write the JSON to the specified file
             File.WriteAllText(filename, json);
         }
         catch (Exception)
         {
-            // If any error occurs during save, throw a custom exception
-            throw new SpreadsheetReadWriteException("Error saving spreadsheet to file.");
+            throw new SpreadsheetReadWriteException("Error saving spreadsheet.");
         }
 
         // After saving, set Changed to false
         Changed = false;
+    }
+
+    /// <summary>
+    ///     Returns the JSON string representation of the current spreadsheet.
+    /// </summary>
+    public string GetSpreadsheetAsJson()
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+
+        var cellsDictionary = new Dictionary<string, Dictionary<string, string>>();
+
+        // Iterate over all non-empty cells in the spreadsheet
+        foreach (var cellName in GetNamesOfAllNonemptyCells())
+        {
+            // Get the cell contents
+            var cellContents = GetCellContents(cellName);
+
+            // Generate the string form of the content
+            string stringForm = GenerateStringForm(cellContents);
+
+            // Add the cell to the dictionary
+            cellsDictionary[cellName] = new Dictionary<string, string>
+            {
+                { "StringForm", stringForm }
+            };
+        }
+
+        // Create the final dictionary with "Cells" as the root key
+        var jsonObject = new Dictionary<string, object>
+        {
+            { "Cells", cellsDictionary }
+        };
+
+        // Serialize the dictionary to JSON
+        return JsonSerializer.Serialize(jsonObject, options);
     }
 
     /// <summary>
