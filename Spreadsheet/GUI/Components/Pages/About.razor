@@ -1,7 +1,56 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>About</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="about-section">
+    <h1>About This Spreadsheet Application</h1>
+    <p>Welcome to the Spreadsheet Application! This tool is designed to provide a simple and intuitive way to manage and compute data using cells, much like a standard spreadsheet. Below is a guide to help you understand how to use the interface and leverage the features available.</p>
 
-Welcome to your new app.
+    <h2>Getting Started</h2>
+    <ul>
+        <li><strong>Selecting Cells:</strong> Click on any cell in the grid to select it. The selected cell's name (e.g., A1, B2) will be displayed in the "Cell" field above the grid.</li>
+        <li><strong>Editing Content:</strong> After selecting a cell, you can modify its contents by typing into the "Content" field. Enter a number, text, or a formula (e.g., <code>=A1 + B2</code>) and hit <strong>Enter</strong> or click outside the field to save the input.</li>
+        <li><strong>Viewing Values:</strong> The evaluated result of the cell's content will be displayed in the grid and also in the "Value" field once the content is confirmed.</li>
+    </ul>
+
+    <h2>Formula Syntax</h2>
+    <p>You can input formulas into cells by typing <code>=</code> followed by an expression, such as <code>=A1 + B2</code> to sum two cells. The spreadsheet will automatically evaluate the formula and display the result in the grid.</p>
+    <p>Formulas must adhere to certain syntax rules in order to be useful. For example, <code>5 + /</code> is not a valid formula because it can't evaluate to a number. Below are the rules for valid formula syntax:</p>
+    <ol>
+        <li><strong>One Token Rule:</strong> There must be at least one token in the formula.</li>
+        <li><strong>Valid Tokens:</strong> The only valid tokens are <code>(</code>, <code>)</code>, <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, variables, and numbers.</li>
+        <li><strong>Closing Parentheses Rule:</strong> The number of closing parentheses must never exceed the number of opening parentheses as you read the formula from left to right.</li>
+        <li><strong>Balanced Parentheses Rule:</strong> The total number of opening parentheses must equal the total number of closing parentheses.</li>
+        <li><strong>First Token Rule:</strong> The first token in a formula must be a number, a variable, or an opening parenthesis.</li>
+        <li><strong>Last Token Rule:</strong> The last token in a formula must be a number, a variable, or a closing parenthesis.</li>
+        <li><strong>Parenthesis/Operator Following Rule:</strong> Any token that follows an opening parenthesis or an operator must be either a number, a variable, or an opening parenthesis.</li>
+        <li><strong>Extra Following Rule:</strong> Any token that follows a number, variable, or closing parenthesis must be an operator or a closing parenthesis.</li>
+    </ol>
+
+    <h2>Error Handling</h2>
+    <ul>
+        <li><strong>Invalid Formula:</strong> If you enter a syntactically incorrect formula (e.g., <code>=A1 + "Text"</code>), the spreadsheet will notify you via a pop-up message, and the invalid formula will remain in the "Content" field until corrected.</li>
+        <li><strong>Circular Dependency:</strong> If a formula creates a circular dependency (where two or more cells rely on each other), a pop-up will notify you, and the content will not be updated. To resolve this, ensure that cells do not depend on each other in a loop.</li>
+        <li><strong>Invalid Cell Name:</strong> If you enter an invalid cell name (e.g., <code>1A</code> or <code>ZZ1000</code>), the spreadsheet will not accept the input. Valid cell names should follow the standard format (e.g., A1, B2).</li>
+        <li><strong>Formula Error (Division by Zero):</strong> If a formula attempts an undefined operation (such as <code>=A1 / 0</code>), a pop-up message will display the error, and no changes will be made to the grid. Correct the formula to avoid invalid operations.</li>
+    </ul>
+
+    <h2>How to Save and Load</h2>
+    <ul>
+        <li><strong>Saving:</strong> To save your current spreadsheet data, click the <strong>Save</strong> button at the bottom of the screen. This will store the current state of all cells.</li>
+        <li><strong>Loading:</strong> You can load a previously saved file by clicking <strong>Load</strong> and selecting the appropriate file from your computer.</li>
+    </ul>
+
+    <h2>Additional Features</h2>
+    <ul>
+        <li><strong>Pop-Up Error Messages:</strong> Whenever an error is detected, an alert will display an error message indicating the issue with the specific cell.</li>
+        <li><strong>Real-Time Recalculation:</strong> Any change made to a cell will automatically update dependent cells in the grid, ensuring that all values are recalculated when necessary.</li>
+    </ul>
+
+    <h2>Notes for Users</h2>
+    <ul>
+        <li>The spreadsheet currently supports basic arithmetic formulas and cell references.</li>
+        <li>Ensure that all formulas are entered correctly to avoid errors.</li>
+        <li>The interface is designed to provide immediate feedback for invalid input, ensuring a smooth user experience.</li>
+    </ul>
+</div>

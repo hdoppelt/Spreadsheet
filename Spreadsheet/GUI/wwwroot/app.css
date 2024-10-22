@@ -49,3 +49,22 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+.about-section {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+p, ul {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
