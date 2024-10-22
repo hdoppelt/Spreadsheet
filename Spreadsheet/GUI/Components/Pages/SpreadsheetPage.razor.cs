@@ -32,18 +32,18 @@ public partial class SpreadsheetPage
     /// <summary>
     ///     Provides an easy way to convert from an index to a letter (0 -> A)
     /// </summary>
-    private char[] Alphabet { get; } = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+    private char[] Alphabet {get;} = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
     /// <summary>
     ///     Gets or sets the name of the file to be saved
     /// </summary>
-    private string FileSaveName { get; set; } = "Spreadsheet.sprd";
+    private string FileSaveName {get; set;} = "Spreadsheet.sprd";
 
     /// <summary>
     ///     <para> Gets or sets the data for all of the cells in the spreadsheet GUI. </para>
     ///     <remarks>Backing Store for HTML</remarks>
     /// </summary>
-    private string[,] CellsBackingStore { get; set; } = new string[ROWS, COLS];
+    private string[,] CellsBackingStore {get; set;} = new string[ROWS, COLS];
 
     /// <summary>
     ///     Default starting cell name.
@@ -86,11 +86,9 @@ public partial class SpreadsheetPage
     /// </summary>
     /// <param name="row">The row component of the cell's coordinates</param>
     /// <param name="col">The column component of the cell's coordinates</param>
-    private void CellClicked( int row, int col )
+    private void CellClicked(int row, int col)
     {
-        SelectedCell = $"{Alphabet[col]}{row + 1}";
-        SelectedRow = row;
-        SelectedCol = col;
+        SelectedCell = $"{Alphabet[col]}{row+1}";
         SelectedContents = CellsBackingStore[row, col];
         SelectedValue = sheet.GetCellValue(SelectedCell);
         TextArea.FocusAsync();
@@ -121,7 +119,7 @@ public partial class SpreadsheetPage
         catch (Exception ex)
         {
             // Handle formula or other evaluation errors
-            await JSRuntime.InvokeVoidAsync("alert", $"Error in cell {SelectedCell}: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("alert", $"Error in cell {SelectedCell}: \n{ex.Message}");
         }
     }
 
@@ -148,10 +146,10 @@ public partial class SpreadsheetPage
             string fileContent = string.Empty;
 
             InputFileChangeEventArgs eventArgs = args as InputFileChangeEventArgs ?? throw new Exception("unable to get file name");
-            if ( eventArgs.FileCount == 1 )
+            if (eventArgs.FileCount == 1)
             {
                 var file = eventArgs.File;
-                if ( file is null )
+                if (file is null)
                 {
                     return;
                 }
@@ -167,7 +165,7 @@ public partial class SpreadsheetPage
                 StateHasChanged();
             }
         }
-        catch ( Exception e )
+        catch (Exception e)
         {
             Debug.WriteLine( "an error occurred while loading the file..." + e );
         }
