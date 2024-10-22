@@ -78,7 +78,9 @@ public partial class SpreadsheetPage
     /// </summary>
     private ElementReference TextArea;
 
-    // Initialize new spreadsheet object
+    /// <summary>
+    ///     Initialize a new Spreadsheet
+    /// </summary>
     private Spreadsheet sheet = new();
 
     /// <summary>
@@ -95,30 +97,29 @@ public partial class SpreadsheetPage
     }
 
     /// <summary>
-    ///     TODO: Fill in
+    ///     Handles the event when the content of a cell is changed by the user.
     /// </summary>
+    /// <param name="e">The event arguments containing the new content value for the cell.</param>
+    /// <returns>A task that represents the asynchronous operation of updating the cell content and value.</returns>
+    /// <remarks>
+    ///     This method attempts to update the cell's content in the spreadsheet and recalculate its evaluated value. 
+    ///     If an error occurs during this process, such as an invalid formula, an error message is displayed in a pop-up.
+    ///     The backing store for the spreadsheet is updated with the new content, and the text area is refocused after the operation completes.
+    /// </remarks>
     private async Task CellContentChanged(ChangeEventArgs e)
     {
         string data = e.Value!.ToString() ?? "";
 
         try
         {
-            // Attempt to set the content in the spreadsheet
             sheet.SetContentsOfCell(SelectedCell, data);
-
-            // Recalculate the value of the selected cell
             SelectedValue = sheet.GetCellValue(SelectedCell);
-
-            // Update the current contents and backing store
             CellsBackingStore[SelectedRow, SelectedCol] = data;
             SelectedContents = data;
-
-            // Refocus the text area
             await TextArea.FocusAsync();
         }
         catch (Exception ex)
         {
-            // Handle formula or other evaluation errors
             await JSRuntime.InvokeVoidAsync("alert", $"Error in cell {SelectedCell}: \n{ex.Message}");
         }
     }
@@ -129,8 +130,7 @@ public partial class SpreadsheetPage
     /// </summary>
     private async void SaveFile()
     {
-        await JSRuntime.InvokeVoidAsync( "downloadFile", FileSaveName, 
-            "replace this with the json representation of the current spreadsheet" );
+        await JSRuntime.InvokeVoidAsync("downloadFile", FileSaveName, "replace this with the json representation of the current spreadsheet");
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public partial class SpreadsheetPage
         {
             string fileContent = string.Empty;
 
-            InputFileChangeEventArgs eventArgs = args as InputFileChangeEventArgs ?? throw new Exception("unable to get file name");
+            InputFileChangeEventArgs eventArgs = args as InputFileChangeEventArgs ?? throw new Exception("Unable to get file name");
             if (eventArgs.FileCount == 1)
             {
                 var file = eventArgs.File;
@@ -167,7 +167,7 @@ public partial class SpreadsheetPage
         }
         catch (Exception e)
         {
-            Debug.WriteLine( "an error occurred while loading the file..." + e );
+            Debug.WriteLine("An error occurred while loading the file..." + e);
         }
     }
 
