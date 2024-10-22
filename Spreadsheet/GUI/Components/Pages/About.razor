@@ -3,8 +3,9 @@
 <PageTitle>About</PageTitle>
 
 <div class="about-section">
-    <h1>About This Spreadsheet Application</h1>
-    <p>Welcome to the Spreadsheet Application! This tool is designed to provide a simple and intuitive way to manage and compute data using cells, much like a standard spreadsheet. Below is a guide to help you understand how to use the interface and leverage the features available.</p>
+    <h1>About This Spreadsheet Application</h1><br />
+    <p>Welcome to the Spreadsheet Application!</p>
+    <p>This tool is designed to provide a simple and intuitive way to manage and compute data using cells, much like a standard spreadsheet. Below is a guide to help you understand how to use the interface and leverage the features available.</p>
 
     <h2>Getting Started</h2>
     <ul>
@@ -29,10 +30,10 @@
 
     <h2>Error Handling</h2>
     <ul>
-        <li><strong>Invalid Formula:</strong> If you enter a syntactically incorrect formula (e.g., <code>=A1 + "Text"</code>), the spreadsheet will notify you via a pop-up message, and the invalid formula will remain in the "Content" field until corrected.</li>
-        <li><strong>Circular Dependency:</strong> If a formula creates a circular dependency (where two or more cells rely on each other), a pop-up will notify you, and the content will not be updated. To resolve this, ensure that cells do not depend on each other in a loop.</li>
-        <li><strong>Invalid Cell Name:</strong> If you enter an invalid cell name (e.g., <code>1A</code> or <code>ZZ1000</code>), the spreadsheet will not accept the input. Valid cell names should follow the standard format (e.g., A1, B2).</li>
-        <li><strong>Formula Error (Division by Zero):</strong> If a formula attempts an undefined operation (such as <code>=A1 / 0</code>), a pop-up message will display the error, and no changes will be made to the grid. Correct the formula to avoid invalid operations.</li>
+        <li><strong>Invalid Formula:</strong> If you enter a syntactically incorrect formula according to the above specification (e.g., <code>=A1 + "Text"</code>), the spreadsheet will notify you via a pop-up message, and the invalid formula will remain in the "Content" field until corrected.</li>
+        <li><strong>Formula Error (Division by Zero):</strong> </li>
+        <li><strong>Circular Dependency:</strong> If a formula creates a circular dependency (where two or more cells rely on each other), the spreadsheet will notify you via a pop-up message, and the content will not be updated. To resolve this, ensure that cells do not depend on each other in a loop.</li>
+        <li><strong>SpreadsheetReadWriteException:</strong> </li>
     </ul>
 
     <h2>How to Save and Load</h2>
