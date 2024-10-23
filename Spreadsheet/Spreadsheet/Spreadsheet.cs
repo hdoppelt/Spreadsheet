@@ -897,6 +897,31 @@ public class Spreadsheet
     }
 
     /// <summary>
+    /// Helper method to insert contents of a saved spreadsheet to the current spreadsheet.
+    /// </summary>
+    /// <param name="jsonString">A Json string to be used to add contnets to a spreadsheet</param>
+    public void LoadSpreadsheetContents(string jsonString)
+    {
+        //Make custom options for Json human readability.
+        var jsonOptions = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        };
+
+        Spreadsheet? json = JsonSerializer.Deserialize<Spreadsheet>(jsonString, jsonOptions);
+        if (json != null)
+        {
+            //Add contnets of cells to the Spreadsheet
+            foreach (var entry in json.Cells)
+            {
+                SetContentsOfCell(entry.Key, entry.Value.StringForm);
+            }
+        }
+
+    }
+
+    /// <summary>
     ///     <para>
     ///         Writes the contents of this spreadsheet to the named file using a JSON format.
     ///         If the file already exists, overwrite it.

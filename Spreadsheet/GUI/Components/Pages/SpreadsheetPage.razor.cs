@@ -92,6 +92,9 @@ public partial class SpreadsheetPage
     private void CellClicked(int row, int col)
     {
         SelectedCell = $"{Alphabet[col]}{row+1}";
+        //Added back the two since an error displaying contents and it was only displaying the first cell, FIXED!!!!!!!
+        SelectedRow = row;
+        SelectedCol = col;
         SelectedContents = CellsBackingStore[row, col];
         SelectedValue = sheet.GetCellValue(SelectedCell);
         TextArea.FocusAsync();
@@ -162,8 +165,9 @@ public partial class SpreadsheetPage
                 // fileContent will contain the contents of the loaded file
                 fileContent = await reader.ReadToEndAsync();
 
-                // TODO: Use the loaded fileContent to replace the current spreadsheet
-
+                // Use the loaded fileContent to replace the current spreadsheet
+                //DONEEEEEEEEEEEEEEEEEEEEEEE
+                sheet.LoadSpreadsheetContents(fileContent);
                 StateHasChanged();
             }
         }
