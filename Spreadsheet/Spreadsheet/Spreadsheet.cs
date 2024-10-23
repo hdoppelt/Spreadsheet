@@ -166,7 +166,7 @@ public class Spreadsheet
         ///     TODO: Fill out
         /// </summary>
         [JsonIgnore]
-        public object? Value { get; set; }
+        public object Value { get; set; }
 
         /// <summary>
         /// StringForm Property to act as a getter/setter for getting values for Json.
@@ -189,7 +189,7 @@ public class Spreadsheet
         public Cell(object contents)
         {
             Contents = contents;
-            Value = null;
+            Value = contents;
             StringForm = DetermineType(contents);
         }
     }
@@ -791,7 +791,7 @@ public class Spreadsheet
         // If the cell exists, return its value
         if (Cells.ContainsKey(name))
         {
-            return Cells[name].Value ?? "";
+            return Cells[name].Value;
         }
 
         // If the cell doesn't exist or is empty, return an empty string
