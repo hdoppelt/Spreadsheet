@@ -3,7 +3,7 @@
 /// </copyright>
 /// 
 /// Name: Harrison Doppelt & Victor Valdez Landa
-/// Date: 10/22/2024
+/// Date: 10/23/2024
 
 namespace GUI.Client.Pages;
 
@@ -14,6 +14,7 @@ using Microsoft.JSInterop;
 using System.Diagnostics;
 using CS3500.Spreadsheet;
 using System.Net.Http.Json;
+using CS3500.Formula;
 
 /// <summary>
 ///     TODO: Fill in
@@ -97,6 +98,9 @@ public partial class SpreadsheetPage
         SelectedCol = col;
         SelectedContents = CellsBackingStore[row, col];
         SelectedValue = sheet.GetCellValue(SelectedCell);
+        if (SelectedValue is FormulaError) {
+            SelectedValue = "Formula Error";
+        }
         TextArea.FocusAsync();
     }
 

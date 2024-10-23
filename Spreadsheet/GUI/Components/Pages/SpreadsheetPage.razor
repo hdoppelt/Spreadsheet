@@ -1,5 +1,5 @@
 ﻿<!-- Name: Harrison Doppelt & Victor Valdez Landa -->
-<!-- Date: 10/22/2024 -->
+<!-- Date: 10/23/2024 -->
 
 @namespace GUI.Client.Pages
 @page "/sheets"
@@ -56,6 +56,14 @@
         </div>
     </div>
 </div>
+
+<!-- Buttons for changing the colors and to revert thenm back to the original-->
+<!-- Button to start the color-changing process -->
+<button class="btn btn-secondary" onclick="startChangingColors()">Go High Mode</button>
+
+<!-- Optional button to stop the color-changing process -->
+<button class="btn btn-danger" onclick="stopChangingColors()">Stop Changing Cell Colors</button>
+
 
 <!-- Save and Load -->
 <span>
@@ -139,4 +147,78 @@
         document.body.removeChild(a);
     }
 
+    //----JavaScript code for changing cell colors and reverting them back to the original color (white)---------------/
+
+    // Store the interval timer (This will be the time of color changes, this can be changed if needed)
+    let colorInterval;
+
+    // Array to store original colors of the cells
+    let originalColors = [];
+
+    // Variable to check if colors are changing
+    let isColorChanging = false;
+
+    // Function to store the original colors before starting to change them
+    function storeOriginalColors() {
+        // Select all the cells in the table
+        var cells = document.querySelectorAll('td');
+        // Clear previous color data from the cells in case they were changed.
+        originalColors = [];
+        cells.forEach(function (cell) {
+            // Store current color, default to white if none
+            originalColors.push(cell.style.backgroundColor || "white");
+        });
+    }
+
+    // Function to change the background colors of the cells
+    function changeColors() {
+        // Select all the cells in the spreadsheet
+        var cells = document.querySelectorAll('td');
+
+        // Loop through each cell and apply a random background color
+        cells.forEach(function (cell) {
+            cell.style.backgroundColor = getRandomColor();
+        });
+    }
+
+    // Helper function to generate random colors
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    
+    // Function to start changing colors
+    function startChangingColors() {
+        if (!isColorChanging) {
+            // Store the original colors of the cells only once
+            storeOriginalColors();
+            // Start changing colors every 10th of a second
+            colorInterval = setInterval(changeColors, 100);
+            // Set this to true to state that teh colors are indeed changing
+            isColorChanging = true;
+        }
+    }
+
+    // Function to stop changing colors and revert to the original ones
+    function stopChangingColors() {
+        if (isColorChanging) {
+            // Stop the interval
+            clearInterval(colorInterval);
+            // Reset the interval
+            colorInterval = null;
+            // Set to false since colors aren't chnaging anymore
+            isColorChanging = false;
+
+            // Revert to original colors
+            var cells = document.querySelectorAll('td');
+            cells.forEach(function (cell, index) {
+                // Restore the original color of the cells
+                cell.style.backgroundColor = originalColors[index];
+            });
+        }
+    }
 </script>
