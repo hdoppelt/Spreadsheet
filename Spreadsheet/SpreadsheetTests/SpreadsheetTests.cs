@@ -2021,7 +2021,6 @@ namespace SpreadsheetTests
             MediumStress();
         }
 
-
         [TestMethod, Timeout(2000)]
         [TestCategory("44")]
         public void MediumStressSave()

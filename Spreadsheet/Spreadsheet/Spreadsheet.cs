@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.VisualBasic;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
+using System.Text.Encodings.Web;
 
 /// <summary>
 ///     <para>
@@ -129,14 +131,17 @@ public class InvalidNameException : Exception
 /// </summary>
 public class Spreadsheet
 {
+
     /// <summary>
     ///     Dictionary to map cell names to their corresponding Cell objects
     /// </summary>
+    [JsonInclude]
     private Dictionary<string, Cell> Cells;
 
     /// <summary>
     ///     DependencyGraph to track dependencies between cells based on their names
     /// </summary>
+    [JsonIgnore]
     private DependencyGraph dependencyGraph = new DependencyGraph();
 
     public Spreadsheet()
@@ -154,9 +159,20 @@ public class Spreadsheet
         ///     The contents of the cell.
         ///     Can be a double, string, or Formula.
         /// </summary>
-        public object Contents { get; private set; }
+        [JsonIgnore]
+        public object Contents { get; set; }
 
-        public object Value { get; private set; }
+        /// <summary>
+        ///     TODO: Fill out
+        /// </summary>
+        [JsonIgnore]
+        public object? Value { get; set; }
+
+        /// <summary>
+        /// StringForm Property to act as a getter/setter for getting values for Json.
+        /// </summary>
+        [JsonInclude]
+        public string StringForm { get; set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Cell"/> class.
@@ -170,11 +186,34 @@ public class Spreadsheet
         ///     The contents of the cell can be a formula, a string, or a numeric value.
         ///     The <see cref="Contents"/> property is set based on this parameter.
         /// </remarks>
-        public Cell(object contents, object value)
+        public Cell(object contents)
         {
             Contents = contents;
-            Value = value;
+            Value = null;
+            StringForm = DetermineType(contents);
         }
+    }
+
+    /// <summary>
+    /// Helper method for StringForm property to get the string value of the cell to be used for Json making.
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    private static string DetermineType(object content)
+    {
+        if (content is double d)
+        {
+            return d.ToString();
+        }
+        if (content is string str)
+        {
+            return str;
+        }
+        if (content is Formula formula)
+        {
+            return "=" + formula.ToString();
+        }
+        return string.Empty;
     }
 
     /// <summary>
@@ -264,14 +303,14 @@ public class Spreadsheet
             RemoveExistingDependencies(name);
 
             // Update the cell's contents in the dictionary
-            Cells[name] = new Cell(number, number);
+            Cells[name] = new Cell(number);
         }
 
         // If the cell does not exist in the dictionary
         else
         {
             // Add the cell name and contents to the dictionary
-            Cells.Add(name, new Cell(number, number));
+            Cells.Add(name, new Cell(number));
         }
 
         // Get the list of cells that need to be recalculated
@@ -307,7 +346,7 @@ public class Spreadsheet
             if (text != "")
             {
                 // Update the cell's contents in the dictionary
-                Cells[name] = new Cell(text, text);
+                Cells[name] = new Cell(text);
             }
 
             // If text is an empty string
@@ -325,7 +364,7 @@ public class Spreadsheet
             if (text != "")
             {
                 // Add the cell name and contents to the dictionary
-                Cells.Add(name, new Cell(text, text));
+                Cells.Add(name, new Cell(text));
             }
         }
 
@@ -402,14 +441,14 @@ public class Spreadsheet
         if (Cells.ContainsKey(name))
         {
             // Update the cell's contents in the dictionary
-            Cells[name] = new Cell(formula, GetCellValue(name));
+            Cells[name] = new Cell(formula);
         }
 
         // If the cell does not exist in the dictionary
         else
         {
             // Add the cell name and contents to the dictionary
-            Cells.Add(name, new Cell(formula, GetCellValue(name)));
+            Cells.Add(name, new Cell(formula));
         }
 
         // Return the list of cells that need to be recalculated
@@ -522,11 +561,48 @@ public class Spreadsheet
             }
         }
 
+        EvaluateAndSaveCells(cellsRecalculate);
+
         // Mark the spreadsheet as changed
         Changed = true;
 
         // Return the list of cells that need to be recalculated
         return cellsRecalculate;
+    }
+
+    public void EvaluateAndSaveCells(IList<string> cellsRecalculate)
+    {
+
+        foreach (string cellName in cellsRecalculate)
+        {
+            // Get the content of the cell (this method assumes GetCellContents exists)
+            object cellContent = GetCellContents(cellName);
+
+            // Skip if the content is an empty string
+            if (cellContent is string s && string.IsNullOrWhiteSpace(s))
+            {
+                // Do nothing if it's an empty string or whitespace
+                continue;
+            }
+
+            // Determine how to evaluate the content based on its type
+            if (cellContent is double d)  // If it's a number, the value is already evaluated
+            {
+                Cells[cellName].Value = d;
+            }
+
+            else if (cellContent is string strContent)  // If it's a string
+            {
+                Cells[cellName].Value = strContent;
+            }
+
+            else if (cellContent is Formula formulaContent)  // If it's a formula
+            {
+                object result = formulaContent.Evaluate(Lookup);
+                Cells[cellName].Value = result;
+            }
+        }
+
     }
 
     /// <summary>
@@ -712,34 +788,10 @@ public class Spreadsheet
         ValidateCellName(name);
         name = name.ToUpper();
 
-        // If the cell exists, get its contents
+        // If the cell exists, return its value
         if (Cells.ContainsKey(name))
         {
-            object content = Cells[name].Contents;
-
-            // If the content is a double, return the double value
-            if (content is double d)
-            {
-                return d;
-            }
-
-            // If the content is a string, return the string value
-            else if (content is string s)
-            {
-                return s;
-            }
-
-            // If the content is a formula, evaluate it
-            else
-            {
-                Formula f = (Formula)content;
-
-                // Evaluate the formula using the Lookup function
-                object result = f.Evaluate(Lookup);
-
-                // Return the result (either a double or a FormulaError)
-                return result;
-            }
+            return Cells[name].Value ?? "";
         }
 
         // If the cell doesn't exist or is empty, return an empty string
@@ -812,75 +864,32 @@ public class Spreadsheet
     {
         Cells = new Dictionary<string, Cell>();
 
+        //Make custom options for Json human readability.
+        var jsonOptions = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        };
         try
         {
-            // Read the JSON file
-            string jsonData = File.ReadAllText(filename);
-
-            // Deserialize the JSON data into a dictionary containing the "Cells" object
-            var jsonObject = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(jsonData);
-
-            // Check if the deserialized object contains the "Cells" key
-            if (jsonObject != null)
+            string jsonString = File.ReadAllText(filename);
+            Spreadsheet? json = JsonSerializer.Deserialize<Spreadsheet>(jsonString, jsonOptions);
+            if (json != null)
             {
-                var cells = jsonObject["Cells"];
-
-                // Populate the spreadsheet with the deserialized cells
-                foreach (var cellEntry in cells)
+                //Add contnets of cells to the Spreadsheet
+                foreach (var entry in json.Cells)
                 {
-                    var cellName = cellEntry.Key;
-
-                    // Validate cell name
-                    try
-                    {
-                        ValidateCellName(cellName);
-                    }
-                    catch (Exception)
-                    {
-                        throw new SpreadsheetReadWriteException($"Invalid cell name: {cellName}");
-                    }
-
-                    var stringForm = cellEntry.Value["StringForm"];
-
-                    // If contents is a Formula
-                    if (stringForm.StartsWith("="))
-                    {
-                        try
-                        {
-                            SetCellContents(cellName, new Formula(stringForm.Substring(1)));
-                        }
-                        catch (FormulaFormatException)
-                        {
-                            throw new SpreadsheetReadWriteException($"Invalid formula in cell {cellName}");
-                        }
-                        catch (CircularException)
-                        {
-                            throw new SpreadsheetReadWriteException($"Circular dependency detected in cell {cellName}");
-                        }
-                    }
-
-                    // If contents is a double
-                    else if (double.TryParse(stringForm, out double number))
-                    {
-                        SetCellContents(cellName, number);
-                    }
-
-                    // If contents is a string
-                    else
-                    {
-                        SetCellContents(cellName, stringForm);
-                    }
+                    SetContentsOfCell(entry.Key, entry.Value.StringForm);
                 }
             }
         }
-        catch (FileNotFoundException)
-        {
-            throw new SpreadsheetReadWriteException("File not found: " + filename);
-        }
+        //If theres anything wring trying to load the file into the spreadsheet, throw
         catch (Exception)
         {
-            throw new SpreadsheetReadWriteException("Error reading spreadsheet from file: " + filename);
+            throw new SpreadsheetReadWriteException("There was an error loading file");
         }
+
+        Changed = false;
     }
 
     /// <summary>
