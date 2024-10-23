@@ -7,8 +7,8 @@
 ///     - Updated return types
 ///     - Updated documentation
 ///
-/// Name: Harrison Doppelt
-/// Date: 09/27/2024
+/// Name: Harrison Doppelt and Victor Valdez Landa
+/// Date: 10/22/2024
 
 namespace CS3500.Spreadsheet;
 
