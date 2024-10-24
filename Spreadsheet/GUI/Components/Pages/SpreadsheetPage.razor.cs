@@ -3,7 +3,7 @@
 /// </copyright>
 /// 
 /// Name: Harrison Doppelt & Victor Valdez Landa
-/// Date: 10/23/2024
+/// Date: 10/24/2024
 
 namespace GUI.Client.Pages;
 
@@ -125,6 +125,7 @@ public partial class SpreadsheetPage
             CellsBackingStore[SelectedRow, SelectedCol] = data;
             SelectedContents = data;
             await TextArea.FocusAsync();
+            StateHasChanged();
         }
         catch (Exception ex)
         {
@@ -172,12 +173,40 @@ public partial class SpreadsheetPage
                 // Use the loaded fileContent to replace the current spreadsheet
                 //DONEEEEEEEEEEEEEEEEEEEEEEE
                 sheet.LoadSpreadsheetContents(fileContent);
+                UpdateCellsBackingStore();
+                
                 StateHasChanged();
             }
         }
         catch (Exception e)
         {
             Debug.WriteLine("An error occurred while loading the file..." + e);
+        }
+    }
+
+    /// <summary>
+    /// Helper method that updates the CellsBackingStore array when a file is loaded.
+    /// </summary>
+    private void UpdateCellsBackingStore()
+    {
+        for (int row = 0; row < ROWS; row++)
+        {
+            for (int col = 0; col < COLS; col++)
+            {
+                string cellName = $"{Alphabet[col]}{row + 1}";
+                var cellContent = sheet.GetCellContents(cellName);
+
+                if (cellContent is Formula)
+                {
+                    // If the content is a formula, add a = before it
+                    CellsBackingStore[row, col] = $"={cellContent}";
+                }
+                else
+                {
+                    // Otherwise, just store the content
+                    CellsBackingStore[row, col] = cellContent?.ToString() ?? string.Empty;
+                }
+            }
         }
     }
 
