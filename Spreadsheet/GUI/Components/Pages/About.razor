@@ -35,9 +35,9 @@
     <h2>Error Handling</h2>
     <ul>
         <li><strong>Invalid Formula:</strong> If you enter a syntactically incorrect formula according to the above specification (e.g., <code>=A1 + "Text"</code>), the spreadsheet will notify you via a pop-up message, and the invalid formula will remain in the "Content" field until corrected.</li>
-        <li><strong>Formula Error (Division by Zero):</strong> </li>
+        <li><strong>Formula Error (Division by Zero):</strong> If a formula attempts to divide a value by zero, the value will result in a FormulaError. The invalid content will be saved in the cell and will need to be corrected.</li>
         <li><strong>Circular Dependency:</strong> If a formula creates a circular dependency (where two or more cells rely on each other), the spreadsheet will notify you via a pop-up message, and the content will not be updated. To resolve this, ensure that cells do not depend on each other in a loop.</li>
-        <li><strong>SpreadsheetReadWriteException:</strong> </li>
+        <li><strong>SpreadsheetReadWriteException:</strong> This error occurs if there is an issue with saving or loading the spreadsheet file (e.g., file corruption or format issues). The spreadsheet will notify you with an error message, and the file operation will not be completed successfully.</li>
     </ul>
 
     <h2>How to Save and Load</h2>
@@ -49,8 +49,8 @@
     <h2>Additional Features</h2>
     <ul>
         <li><strong>Pop-Up Error Messages:</strong> Whenever an error is detected, an alert will display an error message indicating the issue with the specific cell.</li>
-        <li><strong>Real-Time Recalculation:</strong> Any change made to a cell will automatically update dependent cells in the grid, ensuring that all values are recalculated when necessary.</li>
         <li><strong>Go High Mode:</strong> There is a button that makes the spreadsheet cells get <font color="#ff0000">"high"</font>, there is another button that will revert the cells back if you wat to read the cell values better.</li>
+        <li><strong>Clear All Cells:</strong> This feature allows the user to clear the contents of every cell in the spreadsheet with a single click. It effectively resets the spreadsheet, removing all data and returning all cells to their initial empty state.</li>
     </ul>
 
     <h2>Notes for Users</h2>
