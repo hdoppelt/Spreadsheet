@@ -218,4 +218,27 @@ public partial class SpreadsheetPage
             }
         }
     }
+
+    /// <summary>
+    ///     Clears all the cells in the spreadsheet by setting their contents to an empty string.
+    ///     Resets the selected cell, selected contents, and selected value to their default states.
+    /// </summary>
+    private void ClearAllCells()
+    {
+        for (int row = 0; row < ROWS; row++)
+        {
+            for (int col = 0; col < COLS; col++)
+            {
+                SelectedCell = $"{Alphabet[col]}{row + 1}";
+                sheet.SetContentsOfCell(SelectedCell, "");
+                CellsBackingStore[row, col] = string.Empty;
+            }
+        }
+
+        SelectedCell = "A1";
+        SelectedContents = string.Empty;
+        SelectedValue = string.Empty;
+
+        StateHasChanged();
+    }
 }

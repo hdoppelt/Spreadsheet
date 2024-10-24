@@ -163,7 +163,8 @@ public class Spreadsheet
         public object Contents { get; set; }
 
         /// <summary>
-        ///     TODO: Fill out
+        ///     Gets or sets the evaluated value of the cell.
+        ///     This property holds the final value that is displayed in the spreadsheet after evaluating its content.
         /// </summary>
         [JsonIgnore]
         public object Value { get; set; }
@@ -571,9 +572,11 @@ public class Spreadsheet
     }
 
     /// <summary>
-    ///     TODO: FILL OUT
+    ///     Evaluates the contents of the specified cells and updates their values in the spreadsheet.
+    ///     This method processes each cell in the provided list of cell names (`cellsRecalculate`) and determines how to evaluate its content.
+    ///     The content can be a number, a string, or a formula, and the resulting value is saved to the cell's `Value` property.
     /// </summary>
-    /// <param name="cellsRecalculate"></param>
+    /// <param name="cellsRecalculate">A list of cell names that need to be recalculated. This list determines which cells are evaluated and updated.</param>
     public void EvaluateAndSaveCells(IList<string> cellsRecalculate)
     {
 
@@ -606,7 +609,6 @@ public class Spreadsheet
                 Cells[cellName].Value = result;
             }
         }
-
     }
 
     /// <summary>
@@ -918,7 +920,6 @@ public class Spreadsheet
                 SetContentsOfCell(entry.Key, entry.Value.StringForm);
             }
         }
-
     }
 
     /// <summary>
