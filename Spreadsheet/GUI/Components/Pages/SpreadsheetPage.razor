@@ -11,17 +11,19 @@
 
 <PageTitle>Spreadsheet</PageTitle>
 
-<!-- Cell, Content, and Value -->
-<span>
-    <label for="selectedCell">Cell:</label>
-    <input @bind="SelectedCell" id="selectedCell" name="selectedCell" readonly />
-    <label for="selectedContents">Content:</label>
-    <input id="selectedContents" name="selectedContents" value="@SelectedContents" @ref="TextArea" @onchange="CellContentChanged" />
-    <label for="selectedValue">Value:</label>
-    <input id="selectedValue" name="selectedValue" value="@SelectedValue" readonly />
-</span>
+<!-- Cell label and display box -->
+<label for="selectedCell">Cell:</label>
+<input @bind="SelectedCell" id="selectedCell" name="selectedCell" readonly />
 
-<!-- Spreadsheet -->
+<!-- Content label and input box -->
+<label for="selectedContents">Content:</label>
+<input id="selectedContents" name="selectedContents" value="@SelectedContents" @ref="TextArea" @onchange="CellContentChanged" />
+
+<!-- Value label and display box -->
+<label for="selectedValue">Value:</label>
+<input id="selectedValue" name="selectedValue" value="@SelectedValue" readonly />
+
+<!-- Spreadsheet Grid -->
 <div>
     <div class="table-container">
         <div class="scrollable">
@@ -71,16 +73,20 @@
 
 <!-- Buttons for changing the colors and to revert thenm back to the original-->
 <!-- Button to start the color-changing process -->
-<button class="btn btn-secondary" onclick="startChangingColors()">Go High Mode</button>
+<button id="goHighModeButton" class="btn btn-secondary" onclick="startChangingColors()">Go High Mode</button>
 
 <!-- Optional button to stop the color-changing process -->
 <button class="btn btn-danger" onclick="stopChangingColors()">Stop Changing Cell Colors</button>
 
-<!-- Save and Load -->
-<span>
-    <button class="btn btn-primary" @onclick="SaveFile">Save</button>
-    <label>Load</label><InputFile type="file" OnChange="HandleFileChooser" />
-</span>
+<br /><br />
+
+<!-- Save button-->
+<button class="btn btn-primary" @onclick="SaveFile">Save</button>
+
+<!-- Load label and button-->
+<label>Load:</label>
+<InputFile type="file" OnChange="HandleFileChooser" />
+
 
 <!-- Style -->
 <style>
@@ -113,6 +119,36 @@
         width: 1000px;
         height: 500px;
         margin: -1px;
+    }
+
+    /* Rainbow effect for the Go High Mode button */
+    #goHighModeButton {
+        background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+        color: white; /* Text color */
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.5s ease;
+    }
+
+    /* Hover effect */
+    #goHighModeButton:hover {
+        background: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+    }
+
+    /* Centering the text in the column headers (letters) and row headers (numbers) */
+    th {
+        text-align: center; /* Horizontal centering */
+        vertical-align: middle; /* Vertical centering */
+        padding: 10px; /* Optional: Adjust padding to fit the look */
+    }
+
+    /* Ensure the entire cell is centered */
+    td {
+        text-align: center;
+        vertical-align: middle;
     }
 
 </style>
