@@ -17,7 +17,11 @@ using System.Net.Http.Json;
 using CS3500.Formula;
 
 /// <summary>
-///     TODO: Fill in
+///     Represents the logic and interface for managing the Spreadsheet GUI page.
+///     This class handles all interactions with the spreadsheet, including cell selection,
+///     content updates, saving/loading files, and updating the spreadsheet view.
+///     It connects the spreadsheet logic with the user interface and ensures proper
+///     data handling and display.
 /// </summary>
 public partial class SpreadsheetPage
 {
@@ -99,7 +103,7 @@ public partial class SpreadsheetPage
         SelectedContents = CellsBackingStore[row, col];
         SelectedValue = sheet.GetCellValue(SelectedCell);
         if (SelectedValue is FormulaError) {
-            SelectedValue = "Formula Error";
+            SelectedValue = "FormulaError";
         }
         TextArea.FocusAsync();
     }
@@ -122,6 +126,12 @@ public partial class SpreadsheetPage
         {
             sheet.SetContentsOfCell(SelectedCell, data);
             SelectedValue = sheet.GetCellValue(SelectedCell);
+
+            if (SelectedValue is FormulaError)
+            {
+                SelectedValue = "FormulaError";
+            }
+
             CellsBackingStore[SelectedRow, SelectedCol] = data;
             SelectedContents = data;
             await TextArea.FocusAsync();
@@ -171,7 +181,6 @@ public partial class SpreadsheetPage
                 fileContent = await reader.ReadToEndAsync();
 
                 // Use the loaded fileContent to replace the current spreadsheet
-                //DONEEEEEEEEEEEEEEEEEEEEEEE
                 sheet.LoadSpreadsheetContents(fileContent);
                 UpdateCellsBackingStore();
                 
@@ -209,5 +218,4 @@ public partial class SpreadsheetPage
             }
         }
     }
-
 }

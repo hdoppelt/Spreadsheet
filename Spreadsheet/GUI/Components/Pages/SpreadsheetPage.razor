@@ -46,7 +46,19 @@
                                 int c = col;
 
                                 <td @onclick="() => CellClicked(r,c)" style="padding:0px !important;">
-                                    <p class="spreadcell"> @sheet.GetCellValue($"{Alphabet[c]}{r+1}") </p>
+                                    <p class="spreadcell"> 
+                                        @{
+                                            var cellValue = sheet.GetCellValue($"{Alphabet[c]}{r + 1}");
+                                            if (cellValue is CS3500.Formula.FormulaError)
+                                            {
+                                                <text>FormulaError</text>
+                                            }
+                                            else
+                                            {
+                                                <text>@cellValue</text>
+                                            }
+                                        }
+                                    </p>
                                 </td>
                             }
                         </tr>
@@ -64,7 +76,6 @@
 <!-- Optional button to stop the color-changing process -->
 <button class="btn btn-danger" onclick="stopChangingColors()">Stop Changing Cell Colors</button>
 
-
 <!-- Save and Load -->
 <span>
     <button class="btn btn-primary" @onclick="SaveFile">Save</button>
@@ -73,6 +84,7 @@
 
 <!-- Style -->
 <style>
+
     .spreadcell {
         width: 150px;
         height: 40px;
@@ -97,11 +109,12 @@
     }
 
     .scrollable {
-        white-space: nowrap; /* Ensures no line breaks within cells */
+        white-space: nowrap;
         width: 1000px;
         height: 500px;
         margin: -1px;
     }
+
 </style>
 
 <!-- JavaScript -->
@@ -121,7 +134,7 @@
         document.addEventListener('keydown', function (event) {
             console.log(`got key: ${event.key}`);
             if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-                event.preventDefault(); // Prevent arrow keys from scrolling
+                event.preventDefault();
             }
             dotNetObject.invokeMethodAsync('HandleKeyPress', event.key);
         });
@@ -147,7 +160,7 @@
         document.body.removeChild(a);
     }
 
-    //----JavaScript code for changing cell colors and reverting them back to the original color (white)---------------/
+    // --- JavaScript for changing cell colors and reverting them back to the original color (white) ---
 
     // Store the interval timer (This will be the time of color changes, this can be changed if needed)
     let colorInterval;
@@ -221,4 +234,5 @@
             });
         }
     }
+
 </script>
