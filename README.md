@@ -16,7 +16,7 @@ This is a **spreadsheet application** written in **C#**, featuring a robust form
 🔧 How to Run  
 1. Clone the repository:  
    ```sh
-   git clone https://github.com/your-username/Spreadsheet.git
+   git clone https://github.com/hdoppelt/Spreadsheet.git
 2. Open Spreadsheet.sln in Visual Studio.
 3. Build and run the project.
 
