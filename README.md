@@ -15,18 +15,19 @@ A modular spreadsheet application built using C#, .NET 8, and Blazor, supporting
 - C#
 - MSTest (for unit testing)
 
-## 📁 Project Structure
-```bash
-Spreadsheet/
-├── Formula/                  # Formula parsing and evaluation logic
-├── DependencyGraph/         # Handles dependency relations among spreadsheet cells
-├── Spreadsheet/             # Core spreadsheet model and integration logic
-├── GUI/                     # Blazor frontend (Razor components and layout)
-├── *Tests/                  # Unit test projects for each module
-```
-
 ## 🚀 Getting Started
-TODO
+**Prerequisites**
+- .NET 8 SDK
+- Visual Studio 2022 or later
+
+**Build & Run**
+1. Clone the repository:
+```bash
+https://github.com/hdoppelt/Sprite-Editor.git
+```
+2. Open the Spreadsheet.sln solution file in Visual Studio.
+3. Set the GUI project as the Startup Project.
+4. Build and run the project within Visual Studio.
 
 ## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
