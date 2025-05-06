@@ -3,9 +3,6 @@
 ///         Test Class for Spreadsheet Class
 ///     </para>
 /// </summary>
-/// 
-/// Name: Harrison Doppelt
-/// Date: 09/27/2024
 
 using CS3500.DependencyGraph;
 using CS3500.Formula;
@@ -21,8 +18,6 @@ namespace SpreadsheetTests
     [TestClass]
     public class SpreadsheetTests
     {
-
-        // Personal PS5 Tests
 
         // --- Tests for GetNamesOfAllNonemptyCells ---
 
@@ -403,12 +398,6 @@ namespace SpreadsheetTests
             sheet.SetContentsOfCell("B1", formulaB1);
             sheet.SetContentsOfCell("C1", formulaC1);
         }
-
-
-
-
-
-        // Teacher PS5 Tests
 
         // EMPTY SPREADSHEETS
         [TestMethod(), Timeout(2000)]
@@ -952,17 +941,6 @@ namespace SpreadsheetTests
             return f;
         }
 
-
-
-
-
-
-
-
-
-
-        // Personal PS5 Tests
-
         // --- Tests for SetContentsOfCell ---
 
         [TestMethod]
@@ -1346,12 +1324,6 @@ namespace SpreadsheetTests
             Assert.IsInstanceOfType(result, typeof(FormulaError));
         }
 
-
-
-
-
-        // Teacher PS6 Tests
-
         /// <summary>
         /// Helper method to verify an arbitrary spreadsheet's values
         /// Cell names and eexpeced values are given in an array in alternating pairs
@@ -1372,7 +1344,6 @@ namespace SpreadsheetTests
                 }
             }
         }
-
 
         /// <summary>
         /// Helper method to set the contents of a given cell for a given spreadsheet
@@ -1492,7 +1463,6 @@ namespace SpreadsheetTests
             VerifyValues(ss, "B1", "hello");
         }
 
-
         [TestMethod, Timeout(2000)]
         [TestCategory("11")]
         public void GetCellValue_GetNumber_IsValid()
@@ -1510,7 +1480,6 @@ namespace SpreadsheetTests
             Set(ss, "C1", "17.5");
             VerifyValues(ss, "C1", 17.5);
         }
-
 
         [TestMethod, Timeout(2000)]
         [TestCategory("12")]
@@ -1532,7 +1501,6 @@ namespace SpreadsheetTests
             VerifyValues(ss, "A1", 4.1, "B1", 5.2, "C1", 9.3);
         }
 
-
         [TestMethod, Timeout(2000)]
         [TestCategory("13")]
         public void Changed_AfterModify_IsTrue()
@@ -1552,7 +1520,6 @@ namespace SpreadsheetTests
             ss.Save("changed.txt");
             Assert.IsFalse(ss.Changed);
         }
-
 
         [TestMethod, Timeout(2000)]
         [TestCategory("14")]
@@ -1593,8 +1560,6 @@ namespace SpreadsheetTests
             Assert.IsInstanceOfType(ss.GetCellValue("A3"), typeof(FormulaError));
         }
 
-
-
         [TestMethod, Timeout(2000)]
         [TestCategory("16")]
         public void GetCellValue_FormulaBadVariable_ReturnsError()
@@ -1613,7 +1578,6 @@ namespace SpreadsheetTests
             Set(ss, "C1", "= A1 + B1");
             Assert.IsInstanceOfType(ss.GetCellValue("C1"), typeof(FormulaError));
         }
-
 
         [TestMethod, Timeout(2000)]
         [TestCategory("17")]
@@ -1634,7 +1598,6 @@ namespace SpreadsheetTests
             Set(ss, "C1", "= A1 + B1");
             Assert.IsInstanceOfType(ss.GetCellValue("C1"), typeof(FormulaError));
         }
-
 
         [TestMethod, Timeout(2000)]
         [TestCategory("18")]
@@ -1657,7 +1620,6 @@ namespace SpreadsheetTests
             Assert.IsInstanceOfType(ss.GetCellValue("D1"), typeof(FormulaError));
         }
 
-
         [TestMethod, Timeout(2000)]
         [TestCategory("19")]
         public void GetCellValue_FormulaWithVariable_IsValid()
@@ -1677,7 +1639,6 @@ namespace SpreadsheetTests
             VerifyValues(ss, "C1", 8.3);
         }
 
-
         [TestMethod, Timeout(2000)]
         [TestCategory("20")]
         public void GetCellValue_FormulaWithNumber_IsValid()
@@ -1695,7 +1656,6 @@ namespace SpreadsheetTests
             Set(ss, "A1", "= 4.6");
             VerifyValues(ss, "A1", 4.6);
         }
-
 
         // Repeats the simple tests all together
         [TestMethod, Timeout(2000)]
@@ -1725,7 +1685,6 @@ namespace SpreadsheetTests
             Spreadsheet ss = new Spreadsheet();
             Formulas(ss);
         }
-
         public void Formulas(Spreadsheet ss)
         {
             Set(ss, "A1", "4.4");
@@ -1756,7 +1715,6 @@ namespace SpreadsheetTests
         {
             StressTestFormulas();
         }
-
 
         [TestMethod, Timeout(2000)]
         [TestCategory("25")]
@@ -1844,8 +1802,6 @@ namespace SpreadsheetTests
             Spreadsheet ss = new Spreadsheet("save2.txt");
         }
 
-
-
         [TestMethod, Timeout(2000)]
         [TestCategory("35")]
         public void Load_FromManualJson_IsValid()
@@ -1862,8 +1818,6 @@ namespace SpreadsheetTests
             };
 
             File.WriteAllText("save5.txt", JsonSerializer.Serialize(sheet));
-
-
             Spreadsheet ss = new Spreadsheet("save5.txt");
             VerifyValues(ss, "A1", "hello", "A2", 5.0, "A3", 4.0, "A4", 9.0);
         }
@@ -1888,13 +1842,11 @@ namespace SpreadsheetTests
             dynamic? o = JObject.Parse(fileContents);
 
             Assert.IsNotNull(o);
-
             Assert.AreEqual("hello", o?.Cells.A1.StringForm.ToString());
             Assert.AreEqual(5.0, double.Parse(o?.Cells.A2.StringForm.ToString()), 1e-9);
             Assert.AreEqual(4.0, double.Parse(o?.Cells.A3.StringForm.ToString()), 1e-9);
             Assert.AreEqual("=A2+A3", o?.Cells.A4.StringForm.ToString().Replace(" ", ""));
         }
-
 
         // Fun with formulas
         [TestMethod, Timeout(2000)]
@@ -1985,7 +1937,6 @@ namespace SpreadsheetTests
             FormulaStress4();
         }
 
-
         [TestMethod, Timeout(2000)]
         [TestCategory("42")]
         public void MediumStress()
@@ -2038,7 +1989,6 @@ namespace SpreadsheetTests
         {
             MediumStressSave();
         }
-
 
         // A long chained formula. Solutions that re-evaluate 
         // cells on every request, rather than after a cell changes,
@@ -2120,9 +2070,5 @@ namespace SpreadsheetTests
                 result = e;
             }
         }
-
     }
-
-
-
 }

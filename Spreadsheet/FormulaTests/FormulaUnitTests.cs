@@ -3,9 +3,6 @@
 ///         Test Class for Formula Class
 ///     </para>
 /// </summary>
-/// 
-/// Name: Harrison Doppelt
-/// Date: 09/27/2024
 
 namespace FormulaTests;
 
@@ -17,7 +14,6 @@ using System.Text;
 [TestClass]
 public class FormulaSyntaxTests
 {
-    // --- Personal PS2 Tests ---
 
     // --- Tests for One Token Rule ---
 
@@ -488,17 +484,6 @@ public class FormulaSyntaxTests
         ISet<string> variables = formula.GetVariables();
         CollectionAssert.AreEquivalent(new List<string> { "X1", "Y1" }, new List<string>(variables));
     }
-
-
-
-
-
-
-
-
-
-
-    // --- Teacher PS2 Tests ---
 
     // --- Tests One Token Rule ---
 
@@ -1114,17 +1099,6 @@ public class FormulaSyntaxTests
     {
         _ = new Formula("5 + (1-2) * 3.14 / 1e6 + 0.2E-9 - A1 + bb22");
     }
-
-
-
-
-
-
-
-
-
-
-    // --- Personal PS4 Tests ---
 
     // -- Tests for Equals ---
 
@@ -1784,17 +1758,6 @@ public class FormulaSyntaxTests
 
         Assert.IsInstanceOfType(result, typeof(FormulaError));
     }
-
-
-
-
-
-
-
-
-
-
-    // -- Teacher PS4 Tests ---
 
     /// <summary>
     ///   Test that a single number equals itself.

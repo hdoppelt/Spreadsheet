@@ -1,23 +1,4 @@
-﻿/// <copyright file="Formula_PS2.cs" company="UofU-CS3500">
-///     Copyright (c) 2024 UofU-CS3500. All rights reserved.
-/// </copyright>
-/// <summary> 
-///     <para>
-///         This code is provides to start your assignment. It was written
-///         by Profs Joe, Danny, and Jim. You should keep this attribution
-///         at the top of your code where you have your header comment, along
-///         with the other required information.
-///     </para>
-///     <para>
-///         You should remove/add/adjust comments in your file as appropriate
-///         to represent your work and any changes you make.
-///     </para>
-/// </summary>
-/// 
-/// Name: Harrison Doppelt
-/// Date: 09/27/2024
-
-namespace CS3500.Formula;
+﻿namespace CS3500.Formula;
 
 using System.Diagnostics;
 using System.Linq;

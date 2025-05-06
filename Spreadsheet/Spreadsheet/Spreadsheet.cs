@@ -1,16 +1,4 @@
-﻿/// <copyright file="Spreadsheet.cs" company="UofU-CS3500">
-///     Copyright (c) 2024 UofU-CS3500. All rights reserved.
-/// </copyright>
-///
-/// Written by Joe Zachary for CS 3500, September 2013
-/// Update by Profs Kopta and de St. Germain, Fall 2021, Fall 2024
-///     - Updated return types
-///     - Updated documentation
-///
-/// Name: Harrison Doppelt and Victor Valdez Landa
-/// Date: 10/22/2024
-
-namespace CS3500.Spreadsheet;
+﻿namespace CS3500.Spreadsheet;
 
 using CS3500.Formula;
 using CS3500.DependencyGraph;

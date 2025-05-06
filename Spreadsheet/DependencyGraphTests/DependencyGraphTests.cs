@@ -3,9 +3,6 @@
 ///         Test Class for DependencyGraph Class
 ///     </para>
 /// </summary>
-/// 
-/// Name: Harrison Doppelt
-/// Date: 09/27/2024
 
 namespace CS3500.DevelopmentTests;
 
@@ -143,17 +140,6 @@ public class DependencyGraphTests
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-    // --- Personal PS3 Tests ---
 
     // --- Tests for AddDependency Method ---
 
@@ -327,17 +313,6 @@ public class DependencyGraphTests
 
         CollectionAssert.AreEquivalent(new List<string> {"C"}, dependees);
     }
-
-
-
-
-
-
-
-
-    
-
-    // -- Teacher PS3 Tests ---
 
     // ************************** TESTS ON EMPTY DGs ************************* //
 
@@ -757,7 +732,6 @@ public class DependencyGraphTests
         Assert.IsTrue(t.HasDependees("b"));
     }
 
-
     [TestMethod]
     [Timeout(2000)]
     [TestCategory("26")]
@@ -794,7 +768,6 @@ public class DependencyGraphTests
         Assert.IsFalse(e.MoveNext());
     }
 
-
     [TestMethod]
     [Timeout(2000)]
     [TestCategory("27")]
@@ -830,7 +803,6 @@ public class DependencyGraphTests
         e = t.GetDependents("d").GetEnumerator();
         Assert.IsFalse(e.MoveNext());
     }
-
 
     [TestMethod]
     [Timeout(2000)]
@@ -870,7 +842,6 @@ public class DependencyGraphTests
         Assert.AreEqual(2, t.GetDependees("b").Count());
     }
 
-
     [TestMethod]
     [Timeout(2000)]
     [TestCategory("30")]
@@ -892,7 +863,6 @@ public class DependencyGraphTests
         Assert.IsTrue(t.HasDependents("b"));
         Assert.IsTrue(t.HasDependees("b"));
     }
-
 
     [TestMethod]
     [Timeout(2000)]
@@ -934,7 +904,6 @@ public class DependencyGraphTests
         Assert.IsFalse(e.MoveNext());
     }
 
-
     [TestMethod]
     [Timeout(2000)]
     [TestCategory("32")]
@@ -975,7 +944,6 @@ public class DependencyGraphTests
         Assert.IsFalse(e.MoveNext());
     }
 
-
     [TestMethod]
     [Timeout(2000)]
     [TestCategory("33")]
@@ -1007,7 +975,6 @@ public class DependencyGraphTests
         Assert.AreEqual(4, t.Size);
     }
 
-
     [TestMethod]
     [Timeout(2000)]
     [TestCategory("35")]
@@ -1024,7 +991,6 @@ public class DependencyGraphTests
         t.ReplaceDependees("d", ["b"]);
         Assert.AreEqual(2, t.GetDependees("b").Count());
     }
-
 
     [TestMethod]
     [Timeout(2000)]
@@ -1045,7 +1011,6 @@ public class DependencyGraphTests
         Assert.IsTrue(t.HasDependents("b"));
         Assert.IsTrue(t.HasDependees("b"));
     }
-
 
     [TestMethod]
     [Timeout(2000)]
