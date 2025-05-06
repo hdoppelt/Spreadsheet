@@ -1,24 +1,21 @@
-# 📊 C# Spreadsheet Application  
+# Spreadsheet
 
-This is a **spreadsheet application** written in **C#**, featuring a robust formula evaluation system, dependency graph management, and unit testing. Designed for efficiency and flexibility, it supports custom formulas and dependencies between cells.  
+TODO
 
-🚀 Features  
-- 📌 **Dependency Graph** – Tracks relationships between spreadsheet cells.  
-- 🔢 **Formula Processing** – Parses and evaluates mathematical expressions.  
-- 🧪 **Unit Tests** – Includes automated tests for stability and correctness.  
-- 🔗 **Extensible Design** – Easily integrates with other applications.  
+## Features
+TODO
 
-🛠 Tech Stack  
-- **C#** (.NET 6+)  
-- **Visual Studio**  
-- **Unit Testing Framework**  
+## 🛠️ Technologies Used
+TODO
 
-🔧 How to Run  
-1. Clone the repository:  
-   ```sh
-   git clone https://github.com/hdoppelt/Spreadsheet.git
-2. Open Spreadsheet.sln in Visual Studio.
-3. Build and run the project.
+## 📁 Project Structure
+TODO
 
-📜 License
-This project is licensed under the MIT License – see the LICENSE file for details.
+## 🚀 Getting Started
+TODO
+
+## 📄 License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## 👤 Author
+hdoppelt
